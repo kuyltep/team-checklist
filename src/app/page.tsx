@@ -45,9 +45,9 @@ const steps = [
 ];
 
 export default function TeamStartChecklist() {
-  const [completedSteps, setCompletedSteps] = useState([]);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
-  const toggleStep = (id) => {
+  const toggleStep = (id: number) => {
     setCompletedSteps((prev) => (prev.includes(id) ? prev.filter((step) => step !== id) : [...prev, id]));
   };
 
