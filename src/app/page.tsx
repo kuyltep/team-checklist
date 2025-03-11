@@ -1,101 +1,101 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
+const steps = [
+  {
+    id: 1,
+    title: "Определение ролей",
+    description:
+      "Выберите роли и распределите обязанности. Примеры ролей: Координатор (организует встречи), Исполнитель (выполняет задачи), Контролер (проверяет качество).",
+    tip: "Важно! Координатор не значит лидер. В команде каждый отвечает за свою зону. Ошибка: Если все ждут указаний от одного человека, работа встанет. Разделите ответственность!",
+  },
+  {
+    id: 2,
+    title: "Распределение задач",
+    description:
+      "Разбейте проект на конкретные задачи. Используйте метод SMART: задача должна быть конкретной, измеримой, достижимой, актуальной и ограниченной по времени.",
+    tip: "Попробуйте сформулировать задачу с помощью SMART. Например: 'Сделать первый прототип до 10 марта и получить 3 отзыва'. Ошибка: 'Сделать хорошо' — не SMART-задача!",
+  },
+  {
+    id: 3,
+    title: "Установка сроков",
+    description:
+      "Определите дедлайны и контрольные точки. Пример: создание чернового варианта - 3 дня, проверка и обратная связь - 2 дня.",
+    tip: "Используйте метод обратного планирования: начните с конечной цели и двигайтесь назад к текущему моменту. Ошибка: Не оставляйте все на последний день!",
+  },
+  {
+    id: 4,
+    title: "Настройка коммуникации",
+    description:
+      "Выберите инструменты для общения (Telegram, Пачка, Notion). Договоритесь о частоте встреч: ежедневно, раз в неделю?",
+    tip: "Разберите кейс: Один из членов команды пропал на неделю. Как вы поступите? Советы: 1) Уточните причину. 2) Назначьте резервного человека на важные задачи.",
+  },
+  {
+    id: 5,
+    title: "Промежуточные проверки",
+    description:
+      "Запланируйте регулярные встречи для отслеживания прогресса. Используйте методику Stand-up: что сделано, какие сложности, что дальше?",
+    tip: "Попробуйте Stand-up прямо сейчас! Каждый участник отвечает на три вопроса за 1 минуту. Ошибка: Если никто не говорит о проблемах, значит, либо их скрывают, либо не анализируют!",
+  },
+];
+
+export default function TeamStartChecklist() {
+  const [completedSteps, setCompletedSteps] = useState([]);
+
+  const toggleStep = (id) => {
+    setCompletedSteps((prev) => (prev.includes(id) ? prev.filter((step) => step !== id) : [...prev, id]));
+  };
+
+  const progress = (completedSteps.length / steps.length) * 100;
+  const allCompleted = completedSteps.length === steps.length;
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <TooltipProvider>
+      <div className="max-w-lg mx-auto p-4">
+        {allCompleted ? (
+          <div className="text-center p-6 bg-green-100 border border-green-400 rounded-lg shadow">
+            <h1 className="text-2xl font-bold text-green-700">Поздравляем!</h1>
+            <p className="text-lg text-gray-700">Вы успешно завершили все шаги чек-листа!</p>
+          </div>
+        ) : (
+          <>
+            <h1 className="text-2xl font-bold text-center mb-4">TeamStart: Чек-лист</h1>
+            <Progress value={progress} className="mb-4" />
+            {steps.map((step) => (
+              <Card key={step.id} className="mb-2 p-4 border rounded-lg shadow">
+                <CardContent className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-lg font-semibold">{step.title}</h2>
+                    <p className="text-sm text-gray-600">{step.description}</p>
+                    <Tooltip>
+                      <TooltipTrigger className="text-blue-500 text-sm cursor-pointer mt-2 inline-block">
+                        💡 Подсказка
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs bg-white p-5 shadow-2xs">
+                        <p className="text-gray-700">{step.tip}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                  <Button
+                    onClick={() => toggleStep(step.id)}
+                    variant={completedSteps.includes(step.id) ? "outline" : "default"}
+                  >
+                    {completedSteps.includes(step.id) ? "Отменить" : "Готово"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+            <p className="text-center text-sm text-gray-500 mt-4">
+              Завершено: {completedSteps.length}/{steps.length} шагов
+            </p>
+          </>
+        )}
+      </div>
+    </TooltipProvider>
   );
 }
