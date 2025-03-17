@@ -124,3 +124,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-link {
+  color: rgb(33, 33, 45);
+  font-style: italic;
+}
